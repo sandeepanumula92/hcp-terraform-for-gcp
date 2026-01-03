@@ -1,18 +1,11 @@
-resource "google_cloud_run_service" "app" {
+resource "google_cloud_run_v2_service" "app" {
   name     = var.service_name
   location = var.region
 
   template {
-    spec {
-      containers {
-        image = "gcr.io/cloudrun/hello"
-      }
+    containers {
+      image = "gcr.io/cloudrun/hello"
     }
-  }
-
-  traffic {
-    percent         = 100
-    latest_revision = true
   }
 
   depends_on = [
@@ -20,9 +13,9 @@ resource "google_cloud_run_service" "app" {
   ]
 }
 
-# Make Cloud Run public
-resource "google_cloud_run_service_iam_member" "public" {
-  service  = google_cloud_run_service.app.name
+# Allow public access
+resource "google_cloud_run_v2_service_iam_member" "public" {
+  name     = google_cloud_run_v2_service.app.name
   location = var.region
   role     = "roles/run.invoker"
   member   = "allUsers"
