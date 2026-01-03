@@ -14,3 +14,8 @@ variable "service_name" {
   type        = string
   default     = "hello-cloudrun"
 }
+
+variable "gcp_sa_key" {
+  description = "GCP Service Accoun Key"
+  type        = string
+}
